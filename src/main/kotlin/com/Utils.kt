@@ -9,6 +9,9 @@ object Utils {
      * разделителем разрядов или разделителем целой и дробной части
      * Не допускаются разделители разрядов в дробной части
      * Не допускается несколько валют
+     *
+     * Возвращает null, если строка недопустима для преобразования в число, иначе возвращает само число
+     *
      */
     fun parseNumber(str: String): Double? {
 
@@ -53,13 +56,22 @@ object Utils {
         var decimalSeparator: Char? = null
         var currentDigits = fractionDigits
         var prevIsDigit = false;
+
         for (n in str.length - 1 downTo 0)
         {
             val it = str[n];
             when (it) {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {
+
+                    if (thousandSeparator != null && currentDigits.size % 3 == 0)
+                    {
+                        if (str[n + 1] != thousandSeparator)
+                         return null;
+                    }
+
                     currentDigits.add(0, it);
                     prevIsDigit = true
+
                 }
                 ',', '.' -> {
 
