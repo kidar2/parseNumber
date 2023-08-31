@@ -29,6 +29,7 @@ class DemoApplicationTests {
         Assertions.assertNotNull(Utils.parseNumber("$.011"))
         Assertions.assertNotNull(Utils.parseNumber("-0"))
         Assertions.assertNotNull(Utils.parseNumber("1 111 200.1"))
+        Assertions.assertNotNull(Utils.parseNumber("1 101,111"))
 
         //недопустимые значения
         Assertions.assertNull(Utils.parseNumber("1,121 332.122 ₽"))
@@ -51,6 +52,8 @@ class DemoApplicationTests {
         Assertions.assertNull(Utils.parseNumber("10 21,1"))
         Assertions.assertNull(Utils.parseNumber("111.1 200"))
         Assertions.assertNull(Utils.parseNumber("1111 200"))
+        Assertions.assertNull(Utils.parseNumber("1.1 111 200"))
+        Assertions.assertNull(Utils.parseNumber("100 1,1111200"))
     }
 
 }
