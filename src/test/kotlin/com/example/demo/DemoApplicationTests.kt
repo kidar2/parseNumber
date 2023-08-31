@@ -3,8 +3,6 @@ package com.example.demo
 import com.Utils
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.util.NumberUtils.parseNumber
 
 
 class DemoApplicationTests {
@@ -13,23 +11,23 @@ class DemoApplicationTests {
     fun parseNumberTest() {
 
         //допустимые значения
-        Assertions.assertNotNull(Utils.parseNumber("-666 ₽"))
-        Assertions.assertNotNull(Utils.parseNumber("+666 ₽"))
-        Assertions.assertNotNull(Utils.parseNumber("1,123,666.5 ₽"))
-        Assertions.assertNotNull(Utils.parseNumber("123,123,666.3 ₽"))
-        Assertions.assertNotNull(Utils.parseNumber("$+332,122"))
-        Assertions.assertNotNull(Utils.parseNumber("123 332,122"))
-        Assertions.assertNotNull(Utils.parseNumber("123 332,122666666666666666322"))
-        Assertions.assertNotNull(Utils.parseNumber("1 123 332,12266322"))
-        Assertions.assertNotNull(Utils.parseNumber("€-332,122"))
-        Assertions.assertNotNull(Utils.parseNumber("33.2 ₽"))
-        Assertions.assertNotNull(Utils.parseNumber("332122,00%"))
-        Assertions.assertNotNull(Utils.parseNumber("332,122.00"))
-        Assertions.assertNotNull(Utils.parseNumber(".011"))
-        Assertions.assertNotNull(Utils.parseNumber("$.011"))
-        Assertions.assertNotNull(Utils.parseNumber("-0"))
-        Assertions.assertNotNull(Utils.parseNumber("1 111 200.1"))
-        Assertions.assertNotNull(Utils.parseNumber("1 101,111"))
+
+        Assertions.assertEquals(-666.0, Utils.parseNumber("-666 ₽")!!, 0.001)
+        Assertions.assertEquals(1_123_666.5, Utils.parseNumber("1,123,666.5 ₽")!!, 0.001)
+        Assertions.assertEquals(123_123_666.3, Utils.parseNumber("123,123,666.3 ₽")!!, 0.001)
+        Assertions.assertEquals(332.122, Utils.parseNumber("$+332,122")!!, 0.001)
+        Assertions.assertEquals(123_332.122, Utils.parseNumber("123 332,122")!!, 0.001)
+        Assertions.assertEquals(123_332.12266, Utils.parseNumber("123 332,12266")!!, 0.000001)
+        Assertions.assertEquals(1_123_332.12266322, Utils.parseNumber("1 123 332,12266322")!!, 0.00000001)
+        Assertions.assertEquals(-332.122, Utils.parseNumber("€-332,122")!!, 0.001)
+        Assertions.assertEquals(33.2, Utils.parseNumber("33.2 ₽")!!, 0.001)
+        Assertions.assertEquals(332122.0, Utils.parseNumber("332122,00%")!!, 0.001)
+        Assertions.assertEquals(332122.0, Utils.parseNumber("332,122.00")!!, 0.001)
+        Assertions.assertEquals(0.011, Utils.parseNumber(".011")!!, 0.001)
+        Assertions.assertEquals(.011, Utils.parseNumber("$.011")!!, 0.001)
+        Assertions.assertEquals(0.0, Utils.parseNumber("-0")!!, 0.001)
+        Assertions.assertEquals(1111200.1, Utils.parseNumber("1 111 200.1")!!, 0.001)
+        Assertions.assertEquals(1101.111, Utils.parseNumber("1 101,111")!!, 0.001)
 
         //недопустимые значения
         Assertions.assertNull(Utils.parseNumber("1,121 332.122 ₽"))
