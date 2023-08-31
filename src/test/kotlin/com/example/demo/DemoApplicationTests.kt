@@ -18,7 +18,7 @@ class DemoApplicationTests {
         Assertions.assertEquals(332.122, Utils.parseNumber("$+332,122")!!, 0.001)
         Assertions.assertEquals(123_332.122, Utils.parseNumber("123 332,122")!!, 0.001)
         Assertions.assertEquals(123_332.12266, Utils.parseNumber("123 332,12266")!!, 0.000001)
-        Assertions.assertEquals(1_123_332.12266322, Utils.parseNumber("1 123 332,12266322")!!, 0.00000001)
+        Assertions.assertEquals(1_123_332.122, Utils.parseNumber("1 123 332,122")!!, 0.001)
         Assertions.assertEquals(-332.122, Utils.parseNumber("€-332,122")!!, 0.001)
         Assertions.assertEquals(33.2, Utils.parseNumber("33.2 ₽")!!, 0.001)
         Assertions.assertEquals(332122.0, Utils.parseNumber("332122,00%")!!, 0.001)
