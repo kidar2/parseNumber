@@ -88,15 +88,8 @@ object Utils {
                     else if (decimalSeparator == it)
                         return null;
                     else {
-                        if (thousandSeparator == null) {
-                            if (currentDigits.isNotEmpty() && currentDigits.size % 3 == 0)
-                                thousandSeparator = it;
-                            else
-                                return null;
-                        }
-                        else if (thousandSeparator != it)
-                            return null;
-                        else if (currentDigits.isEmpty() && currentDigits.size % 3 != 0)
+                        thousandSeparator = processThousandSeparator(it, currentDigits, thousandSeparator)
+                        if (thousandSeparator == null)
                             return null;
                     }
                     prevIsDigit = false;
@@ -104,17 +97,12 @@ object Utils {
                 ' ' -> {
                     if (!prevIsDigit)
                         return null
+
+                    thousandSeparator = processThousandSeparator(it, currentDigits, thousandSeparator)
+
                     if (thousandSeparator == null)
-                    {
-                        if (currentDigits.isNotEmpty() && currentDigits.size % 3 == 0)
-                            thousandSeparator = it;
-                        else
-                            return null;
-                    }
-                    else if (thousandSeparator != it)
                         return null;
-                    else if (currentDigits.isEmpty() && currentDigits.size % 3 != 0)
-                        return null;
+
                     prevIsDigit = false;
                 }
 
@@ -135,10 +123,23 @@ object Utils {
         else
             "${digits.joinToString("")}.${fractionDigits.joinToString("")}".toDouble()
 
-        var r = if (isPlus) res else -res;
+        return if (isPlus) res else -res;
+    }
 
-        println(r)
-
-        return r;
+    private fun processThousandSeparator(it: Char, currentDigits: LinkedList<Char>, thousandSeparator: Char?): Char?
+    {
+        if (thousandSeparator == null)
+        {
+            if (currentDigits.isNotEmpty() && currentDigits.size % 3 == 0)
+                return it
+            else
+                return null;
+        }
+        else if (thousandSeparator != it)
+            return null;
+        else if (currentDigits.isEmpty() && currentDigits.size % 3 != 0)
+            return null;
+        else
+            return thousandSeparator;
     }
 }
