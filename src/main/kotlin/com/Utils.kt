@@ -61,8 +61,7 @@ object Utils {
 
         for (n in str.length - 1 downTo 0)
         {
-            val it = str[n];
-            when (it) {
+            when (val it = str[n]) {
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {
 
                     if (thousandSeparator != null && currentDigits.size % 3 == 0)
