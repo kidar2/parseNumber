@@ -28,6 +28,12 @@ class DemoApplicationTests {
         Assertions.assertEquals(0.0, Utils.parseNumber("-0")!!, 0.001)
         Assertions.assertEquals(1111200.1, Utils.parseNumber("1 111 200.1")!!, 0.001)
         Assertions.assertEquals(1101.111, Utils.parseNumber("1 101,111")!!, 0.001)
+        Assertions.assertEquals(-0.1, Utils.parseNumber("(-0.1)")!!, 0.01)
+        Assertions.assertEquals(-0.1, Utils.parseNumber("- (0.1)")!!, 0.01)
+        Assertions.assertEquals(200.23, Utils.parseNumber(" ( 200.23)")!!, 0.01)
+        Assertions.assertEquals(-0.1, Utils.parseNumber("- <0.1>")!!, 0.01)
+        Assertions.assertEquals(33.2, Utils.parseNumber("33.2 °")!!, 0.001)
+        Assertions.assertEquals(330.12, Utils.parseNumber("~330,12")!!, 0.001)
 
         //недопустимые значения
         Assertions.assertNull(Utils.parseNumber("1,121 332.122 ₽"))

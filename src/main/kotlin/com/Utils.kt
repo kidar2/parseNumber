@@ -19,7 +19,7 @@ object Utils {
 
         var hasSpec = false;
 
-        listOf('₽', '€', '$', '%').forEach {
+        listOf('₽', '€', '$', '%', '~', '°').forEach {
             if (str.startsWith(it)) {
                 if (hasSpec)
                     return null;
@@ -35,7 +35,7 @@ object Utils {
             }
         }
 
-        str = str.trim()
+        str = trim(str)
 
         var isPlus = true;
 
@@ -45,6 +45,8 @@ object Utils {
         } else if (str.startsWith('+')) {
             str = str.substring(1, str.length)
         }
+
+        str = trim(str)
 
         if (str.isEmpty())
             return null;
@@ -66,7 +68,7 @@ object Utils {
                     if (thousandSeparator != null && currentDigits.size % 3 == 0)
                     {
                         if (str[n + 1] != thousandSeparator)
-                         return null;
+                            return null;
                     }
 
                     currentDigits.add(0, it);
@@ -128,18 +130,33 @@ object Utils {
 
     private fun processThousandSeparator(it: Char, currentDigits: LinkedList<Char>, thousandSeparator: Char?): Char?
     {
-        if (thousandSeparator == null)
-        {
+        return if (thousandSeparator == null) {
             if (currentDigits.isNotEmpty() && currentDigits.size % 3 == 0)
-                return it
+                it
             else
-                return null;
-        }
-        else if (thousandSeparator != it)
-            return null;
+                null;
+        } else if (thousandSeparator != it)
+            null;
         else if (currentDigits.isEmpty() && currentDigits.size % 3 != 0)
-            return null;
+            null;
         else
-            return thousandSeparator;
+            thousandSeparator;
+    }
+
+    val brackets = listOf(Pair('(', ')'), Pair('[', ']'), Pair('<', '>'))
+
+    /**
+     * Удаляем скобки и пробелы до и после числа
+     */
+    private fun trim(str: String): String
+    {
+        var str = str.trim();
+        brackets.forEach {
+            if (str.startsWith(it.first) && str.endsWith(it.second))
+                str = str.substring(1, str.length - 1);
+        }
+
+
+        return str.trim();
     }
 }
